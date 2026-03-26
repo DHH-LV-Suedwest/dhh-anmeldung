@@ -6,566 +6,316 @@
 <title>DHH LV Südwest – Veranstaltungsanmeldung</title>
 <meta name="robots" content="noindex, nofollow">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --blau:#1a5fa8;
+  --lila:#6b3fa0;
+  --blau-hell:#e8f0fb;
+  --gruen:#2e7d32;
+  --gruen-hell:#e8f5e9;
+  --rand:#d0d0d8;
+  --rand-hell:#e8e8ef;
+  --text:#1a1a2e;
+  --text-grau:#5a5a72;
+  --text-hint:#8a8a9a;
+  --hg:#f5f5f8;
+  --weiss:#ffffff;
+  --r:12px;
+  --r-sm:8px;
+}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;background:var(--hg);color:var(--text);min-height:100vh;line-height:1.5;}
 
-  :root {
-    --blue: #1a5fa8;
-    --purple: #6b3fa0;
-    --blue-light: #e8f0fb;
-    --purple-light: #f0eaf8;
-    --green: #2e7d32;
-    --green-light: #e8f5e9;
-    --orange: #e65100;
-    --orange-light: #fff3e0;
-    --border: #d0d0d8;
-    --border-light: #e8e8ef;
-    --text: #1a1a2e;
-    --text-muted: #5a5a72;
-    --text-hint: #8a8a9a;
-    --bg: #f5f5f8;
-    --white: #ffffff;
-    --radius: 12px;
-    --radius-sm: 8px;
-  }
+#pw-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:1.5rem;background:linear-gradient(135deg,#1a5fa8,#6b3fa0);}
+.pw-box{background:var(--weiss);border-radius:var(--r);padding:2.5rem 2rem;width:100%;max-width:380px;text-align:center;}
+.pw-logo{font-size:36px;margin-bottom:1rem;}
+.pw-box h1{font-size:18px;font-weight:700;margin-bottom:4px;color:var(--blau);}
+.pw-box .pw-desc{font-size:13px;color:var(--text-grau);margin-bottom:1.5rem;}
+.pw-box input[type=password]{width:100%;padding:12px 14px;font-size:16px;border:1.5px solid var(--rand);border-radius:var(--r-sm);margin-bottom:0.75rem;outline:none;letter-spacing:2px;text-align:center;font-family:inherit;}
+.pw-box input[type=password]:focus{border-color:var(--blau);}
+.pw-btn{width:100%;padding:12px;background:linear-gradient(135deg,#1a5fa8,#6b3fa0);color:white;border:none;border-radius:var(--r-sm);font-size:15px;font-weight:700;cursor:pointer;}
+.pw-fehler{font-size:13px;color:#c62828;margin-top:0.6rem;display:none;}
+.pw-hint{font-size:12px;color:var(--text-hint);margin-top:1.5rem;}
 
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-    line-height: 1.5;
-  }
+#app{display:none;}
+.kopfzeile{background:linear-gradient(135deg,#1a5fa8,#6b3fa0);color:white;padding:1.25rem 1.5rem;}
+.kopfzeile h1{font-size:18px;font-weight:700;}
+.kopfzeile p{font-size:12px;opacity:0.8;margin-top:2px;}
 
-  /* ── PASSWORD SCREEN ── */
-  #pw-screen {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 1.5rem;
-    background: linear-gradient(135deg, #1a5fa8 0%, #6b3fa0 100%);
-  }
-  .pw-box {
-    background: var(--white);
-    border-radius: var(--radius);
-    padding: 2.5rem 2rem;
-    width: 100%;
-    max-width: 380px;
-    text-align: center;
-  }
-  .pw-logo {
-    font-size: 36px;
-    margin-bottom: 1rem;
-  }
-  .pw-box h1 {
-    font-size: 18px;
-    font-weight: 600;
-    margin-bottom: 4px;
-    color: var(--blue);
-  }
-  .pw-box p {
-    font-size: 13px;
-    color: var(--text-muted);
-    margin-bottom: 1.5rem;
-  }
-  .pw-box input[type="password"] {
-    width: 100%;
-    padding: 12px 14px;
-    font-size: 16px;
-    border: 1.5px solid var(--border);
-    border-radius: var(--radius-sm);
-    margin-bottom: 0.75rem;
-    outline: none;
-    letter-spacing: 2px;
-    text-align: center;
-  }
-  .pw-box input[type="password"]:focus { border-color: var(--blue); }
-  .pw-btn {
-    width: 100%;
-    padding: 12px;
-    background: linear-gradient(135deg, var(--blue) 0%, var(--purple) 100%);
-    color: white;
-    border: none;
-    border-radius: var(--radius-sm);
-    font-size: 15px;
-    font-weight: 600;
-    cursor: pointer;
-  }
-  .pw-btn:hover { opacity: 0.9; }
-  .pw-error {
-    font-size: 13px;
-    color: #c62828;
-    margin-top: 0.6rem;
-    display: none;
-  }
-  .pw-hint {
-    font-size: 12px;
-    color: var(--text-hint);
-    margin-top: 1.5rem;
-  }
+.nav{background:var(--weiss);border-bottom:1px solid var(--rand-hell);display:flex;overflow-x:auto;}
+.nav-btn{flex-shrink:0;padding:14px 20px;background:none;border:none;border-bottom:3px solid transparent;font-size:14px;color:var(--text-grau);cursor:pointer;white-space:nowrap;font-weight:500;}
+.nav-btn.aktiv{color:var(--blau);border-bottom-color:var(--blau);}
 
-  /* ── MAIN APP ── */
-  #app { display: none; }
+.seite{display:none;padding:1.25rem 1rem;max-width:700px;margin:0 auto;}
+.seite.sichtbar{display:block;}
+.intro-text{font-size:14px;color:var(--text-grau);margin-bottom:1rem;line-height:1.6;}
 
-  .top-bar {
-    background: linear-gradient(135deg, var(--blue) 0%, var(--purple) 100%);
-    color: white;
-    padding: 1.25rem 1.5rem;
-  }
-  .top-bar h1 { font-size: 18px; font-weight: 600; }
-  .top-bar p  { font-size: 12px; opacity: 0.8; margin-top: 2px; }
+.event-karte{background:var(--weiss);border:1.5px solid var(--rand-hell);border-radius:var(--r);padding:1.1rem 1.25rem;margin-bottom:0.75rem;cursor:pointer;display:flex;align-items:flex-start;gap:1rem;transition:border-color 0.15s;}
+.event-karte:hover{border-color:var(--blau);}
+.event-karte.ausgewaehlt{border:2px solid var(--blau);background:var(--blau-hell);}
+.event-icon{font-size:28px;flex-shrink:0;margin-top:2px;}
+.event-inhalt{flex:1;}
+.event-titel{font-size:15px;font-weight:700;margin-bottom:3px;}
+.event-info{font-size:13px;color:var(--text-grau);line-height:1.5;}
+.status{display:inline-block;font-size:11px;font-weight:700;padding:2px 9px;border-radius:20px;margin-top:6px;background:var(--gruen-hell);color:var(--gruen);}
 
-  .nav {
-    background: var(--white);
-    border-bottom: 1px solid var(--border-light);
-    display: flex;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-  .nav-btn {
-    flex-shrink: 0;
-    padding: 14px 20px;
-    background: none;
-    border: none;
-    border-bottom: 3px solid transparent;
-    font-size: 14px;
-    color: var(--text-muted);
-    cursor: pointer;
-    white-space: nowrap;
-    font-weight: 500;
-  }
-  .nav-btn.active {
-    color: var(--blue);
-    border-bottom-color: var(--blue);
-  }
+.form-karte{background:var(--weiss);border:1px solid var(--rand-hell);border-radius:var(--r);overflow:hidden;margin-bottom:1rem;}
+.form-kopf{background:linear-gradient(135deg,#1a5fa8,#6b3fa0);color:white;padding:1rem 1.25rem;}
+.form-kopf h2{font-size:15px;font-weight:700;}
+.form-kopf p{font-size:13px;opacity:0.85;margin-top:3px;}
+.form-body{padding:1.25rem;}
+.feld{margin-bottom:1.1rem;}
+.feld label{display:block;font-size:13px;font-weight:500;color:var(--text-grau);margin-bottom:5px;}
+.feld input[type=text],.feld input[type=email],.feld textarea{width:100%;padding:10px 12px;font-size:15px;border:1.5px solid var(--rand);border-radius:var(--r-sm);outline:none;font-family:inherit;color:var(--text);background:var(--weiss);}
+.feld input:focus,.feld textarea:focus{border-color:var(--blau);}
+.feld textarea{min-height:80px;resize:vertical;}
+.pflicht{color:#c62828;}
+.hinweis{font-size:12px;color:var(--text-hint);margin-top:4px;}
+.checkbox-gruppe{display:flex;flex-direction:column;gap:10px;}
+.checkbox-zeile{display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--text);cursor:pointer;line-height:1.4;}
+.checkbox-zeile input[type=checkbox]{width:18px;height:18px;flex-shrink:0;margin-top:1px;cursor:pointer;}
+.absenden-btn{width:100%;padding:13px;background:linear-gradient(135deg,#1a5fa8,#6b3fa0);color:white;border:none;border-radius:var(--r-sm);font-size:16px;font-weight:700;cursor:pointer;margin-top:0.5rem;}
+.absenden-btn:disabled{opacity:0.45;cursor:default;}
+.erfolg-box{background:var(--gruen-hell);border:1px solid #a5d6a7;border-radius:var(--r-sm);padding:1rem;text-align:center;font-size:14px;color:var(--gruen);margin-top:1rem;display:none;line-height:1.6;}
+.fehler-box{background:#fdecea;border:1px solid #f5c6c6;border-radius:var(--r-sm);padding:1rem;text-align:center;font-size:14px;color:#c62828;margin-top:1rem;display:none;}
 
-  .page { display: none; padding: 1.25rem 1rem; max-width: 700px; margin: 0 auto; }
-  .page.visible { display: block; }
+.kein-event{text-align:center;padding:2.5rem 1rem;color:var(--text-grau);font-size:14px;}
+.kein-event strong{display:block;font-size:15px;color:var(--text);margin-bottom:8px;}
+.link-btn{display:inline-block;margin-top:0.75rem;padding:9px 18px;border:1.5px solid var(--blau);border-radius:20px;font-size:13px;font-weight:500;color:var(--blau);cursor:pointer;background:none;}
+.zurueck-btn{background:none;border:none;cursor:pointer;font-size:13px;color:var(--text-grau);margin-bottom:0.75rem;padding:0;}
+.zurueck-btn:hover{color:var(--blau);}
 
-  /* ── EVENTS ── */
-  .page-intro { font-size: 14px; color: var(--text-muted); margin-bottom: 1rem; line-height: 1.6; }
+.info-karte{background:var(--weiss);border:1px solid var(--rand-hell);border-radius:var(--r);padding:1.25rem;margin-bottom:0.75rem;}
+.info-karte h3{font-size:14px;font-weight:700;color:var(--blau);margin-bottom:8px;}
+.info-karte p{font-size:13px;color:var(--text-grau);line-height:1.65;margin-bottom:4px;}
+.trennlinie{border:none;border-top:1px solid var(--rand-hell);margin:0.9rem 0;}
 
-  .event-card {
-    background: var(--white);
-    border: 1.5px solid var(--border-light);
-    border-radius: var(--radius);
-    padding: 1.1rem 1.25rem;
-    margin-bottom: 0.75rem;
-    cursor: pointer;
-    transition: border-color 0.15s;
-    display: flex;
-    align-items: flex-start;
-    gap: 1rem;
-  }
-  .event-card:hover { border-color: var(--blue); }
-  .event-card.selected { border-color: var(--blue); background: var(--blue-light); }
-  .event-icon { font-size: 28px; flex-shrink: 0; margin-top: 2px; }
-  .event-body { flex: 1; }
-  .event-title { font-size: 15px; font-weight: 600; margin-bottom: 3px; }
-  .event-meta  { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
-  .badge {
-    display: inline-block; font-size: 11px; font-weight: 600;
-    padding: 2px 9px; border-radius: 20px; margin-top: 6px;
-  }
-  .badge-open   { background: var(--green-light); color: var(--green); }
-  .badge-soon   { background: var(--orange-light); color: var(--orange); }
+.spinner{display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,0.4);border-top-color:white;border-radius:50%;animation:drehen 0.7s linear infinite;vertical-align:middle;margin-right:6px;}
+@keyframes drehen{to{transform:rotate(360deg);}}
 
-  /* ── FORM ── */
-  .form-card {
-    background: var(--white);
-    border: 1px solid var(--border-light);
-    border-radius: var(--radius);
-    overflow: hidden;
-    margin-bottom: 1rem;
-  }
-  .form-header {
-    background: linear-gradient(135deg, var(--blue) 0%, var(--purple) 100%);
-    color: white;
-    padding: 1rem 1.25rem;
-  }
-  .form-header h2 { font-size: 15px; font-weight: 600; }
-  .form-header p  { font-size: 13px; opacity: 0.85; margin-top: 3px; }
-  .form-body { padding: 1.25rem; }
-
-  .field { margin-bottom: 1.1rem; }
-  .field label {
-    display: block; font-size: 13px; font-weight: 500;
-    color: var(--text-muted); margin-bottom: 5px;
-  }
-  .field input[type="text"],
-  .field input[type="email"],
-  .field textarea {
-    width: 100%;
-    padding: 10px 12px;
-    font-size: 15px;
-    border: 1.5px solid var(--border);
-    border-radius: var(--radius-sm);
-    outline: none;
-    font-family: inherit;
-    color: var(--text);
-    background: var(--white);
-  }
-  .field input:focus, .field textarea:focus { border-color: var(--blue); }
-  .field textarea { min-height: 80px; resize: vertical; }
-  .req { color: #c62828; }
-  .hint { font-size: 12px; color: var(--text-hint); margin-top: 4px; }
-
-  .check-group { display: flex; flex-direction: column; gap: 10px; }
-  .check-label {
-    display: flex; align-items: flex-start; gap: 10px;
-    font-size: 14px; color: var(--text); cursor: pointer; line-height: 1.4;
-  }
-  .check-label input[type="checkbox"] {
-    width: 18px; height: 18px; flex-shrink: 0;
-    margin-top: 1px; cursor: pointer; accent-color: var(--blue);
-  }
-
-  .submit-btn {
-    width: 100%;
-    padding: 13px;
-    background: linear-gradient(135deg, var(--blue) 0%, var(--purple) 100%);
-    color: white;
-    border: none;
-    border-radius: var(--radius-sm);
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    margin-top: 0.5rem;
-    transition: opacity 0.15s;
-  }
-  .submit-btn:hover { opacity: 0.9; }
-  .submit-btn:disabled { opacity: 0.45; cursor: default; }
-
-  .success-box {
-    background: var(--green-light);
-    border: 1px solid #a5d6a7;
-    border-radius: var(--radius-sm);
-    padding: 1rem;
-    text-align: center;
-    font-size: 14px;
-    color: var(--green);
-    margin-top: 1rem;
-    display: none;
-    line-height: 1.6;
-  }
-  .error-box {
-    background: #fdecea;
-    border: 1px solid #f5c6c6;
-    border-radius: var(--radius-sm);
-    padding: 1rem;
-    text-align: center;
-    font-size: 14px;
-    color: #c62828;
-    margin-top: 1rem;
-    display: none;
-  }
-
-  .no-event-hint {
-    text-align: center; padding: 2.5rem 1rem;
-    color: var(--text-muted); font-size: 14px; line-height: 1.7;
-  }
-  .no-event-hint strong { display: block; font-size: 15px; color: var(--text); margin-bottom: 8px; }
-  .link-btn {
-    display: inline-block;
-    margin-top: 0.75rem;
-    padding: 9px 18px;
-    border: 1.5px solid var(--blue);
-    border-radius: 20px;
-    font-size: 13px; font-weight: 500;
-    color: var(--blue);
-    cursor: pointer; background: none;
-  }
-  .link-btn:hover { background: var(--blue-light); }
-
-  .back-btn {
-    background: none; border: none; cursor: pointer;
-    font-size: 13px; color: var(--text-muted);
-    display: flex; align-items: center; gap: 5px;
-    margin-bottom: 0.75rem; padding: 0;
-  }
-  .back-btn:hover { color: var(--blue); }
-
-  /* ── INFO ── */
-  .info-card {
-    background: var(--white);
-    border: 1px solid var(--border-light);
-    border-radius: var(--radius);
-    padding: 1.25rem;
-    margin-bottom: 0.75rem;
-  }
-  .info-card h3 {
-    font-size: 14px; font-weight: 600;
-    color: var(--blue); margin-bottom: 8px;
-  }
-  .info-card p { font-size: 13px; color: var(--text-muted); line-height: 1.65; margin-bottom: 4px; }
-  .info-card a { color: var(--purple); text-decoration: none; }
-  .info-card a:hover { text-decoration: underline; }
-  .divider { border: none; border-top: 1px solid var(--border-light); margin: 0.9rem 0; }
-
-  /* ── SPINNER ── */
-  .spinner {
-    display: inline-block; width: 18px; height: 18px;
-    border: 2px solid rgba(255,255,255,0.4);
-    border-top-color: white; border-radius: 50%;
-    animation: spin 0.7s linear infinite; vertical-align: middle; margin-right: 8px;
-  }
-  @keyframes spin { to { transform: rotate(360deg); } }
-
-  /* ── RESPONSIVE ── */
-  @media (min-width: 600px) {
-    .top-bar { padding: 1.5rem 2rem; }
-    .top-bar h1 { font-size: 20px; }
-    .page { padding: 1.5rem; }
-    .pw-box { padding: 3rem 2.5rem; }
-  }
+@media(min-width:600px){
+  .kopfzeile{padding:1.5rem 2rem;}
+  .kopfzeile h1{font-size:20px;}
+  .seite{padding:1.5rem;}
+}
 </style>
 </head>
 <body>
 
-<!-- Passwort-Logik direkt hier, läuft auch lokal -->
 <script>
-var PASSWORT_GLOBAL = 'Mitglieder2026';
+/* ── PASSWORT HIER ÄNDERN ── */
+var PW = 'Mitglieder2026';
+
 function checkPw() {
-  var val = document.getElementById('pw-input').value;
-  if (val === PASSWORT_GLOBAL) {
+  var eingabe = document.getElementById('pw-eingabe').value;
+  if (eingabe === PW) {
     document.getElementById('pw-screen').style.display = 'none';
     document.getElementById('app').style.display = 'block';
   } else {
-    document.getElementById('pw-error').style.display = 'block';
-    document.getElementById('pw-input').value = '';
-    document.getElementById('pw-input').focus();
+    document.getElementById('pw-fehler').style.display = 'block';
+    document.getElementById('pw-eingabe').value = '';
+    document.getElementById('pw-eingabe').focus();
   }
+}
+
+function zeigeSeite(id) {
+  document.querySelectorAll('.seite').forEach(function(s) {
+    s.classList.remove('sichtbar');
+  });
+  document.getElementById(id).classList.add('sichtbar');
+  document.querySelectorAll('.nav-btn').forEach(function(b, i) {
+    b.classList.toggle('aktiv', ['events','anmeldung','info'][i] === id);
+  });
+  window.scrollTo(0, 0);
+}
+
+function waehleEvent(karte, titel, info) {
+  document.querySelectorAll('.event-karte').forEach(function(k) {
+    k.classList.remove('ausgewaehlt');
+  });
+  karte.classList.add('ausgewaehlt');
+  document.getElementById('form-titel').textContent = titel;
+  document.getElementById('form-info').textContent = info;
+  document.getElementById('feld-event').value = titel;
+  document.getElementById('feld-betreff').value = 'Neue Anmeldung: ' + titel;
+  document.getElementById('kein-event-hinweis').style.display = 'none';
+  document.getElementById('formular-bereich').style.display = 'block';
+  document.getElementById('anmelde-formular').reset();
+  document.getElementById('feld-event').value = titel;
+  document.getElementById('feld-betreff').value = 'Neue Anmeldung: ' + titel;
+  document.getElementById('erfolg-box').style.display = 'none';
+  document.getElementById('fehler-box').style.display = 'none';
+  var btn = document.getElementById('absenden-btn');
+  btn.disabled = false;
+  btn.textContent = 'Jetzt verbindlich anmelden';
+  zeigeSeite('anmeldung');
+}
+
+function sendeFormular(e) {
+  e.preventDefault();
+  var btn = document.getElementById('absenden-btn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span>Wird gesendet ...';
+  document.getElementById('erfolg-box').style.display = 'none';
+  document.getElementById('fehler-box').style.display = 'none';
+  var form = document.getElementById('anmelde-formular');
+  fetch('https://api.web3forms.com/submit', {
+    method: 'POST',
+    body: new FormData(form),
+    headers: { 'Accept': 'application/json' }
+  })
+  .then(function(res) {
+    if (res.ok) {
+      document.getElementById('erfolg-box').style.display = 'block';
+      btn.textContent = 'Anmeldung eingegangen';
+      form.reset();
+    } else { throw new Error(); }
+  })
+  .catch(function() {
+    document.getElementById('fehler-box').style.display = 'block';
+    btn.disabled = false;
+    btn.textContent = 'Nochmal versuchen';
+  });
 }
 </script>
 
-<!-- ══ PASSWORTSCHUTZ ══ -->
+<!-- PASSWORT -->
 <div id="pw-screen">
   <div class="pw-box">
-    <div class="pw-logo">🔒</div>
+    <div class="pw-logo">&#128274;</div>
     <h1>DHH LV Südwest</h1>
-    <p>Veranstaltungsanmeldung · nur für Mitglieder</p>
-    <input type="password" id="pw-input" placeholder="Passwort eingeben"
+    <p class="pw-desc">Veranstaltungsanmeldung &middot; nur für Mitglieder</p>
+    <input type="password" id="pw-eingabe" placeholder="Passwort eingeben"
            onkeydown="if(event.key==='Enter')checkPw()">
     <button class="pw-btn" onclick="checkPw()">Weiter</button>
-    <div class="pw-error" id="pw-error" style="display:none;">Falsches Passwort. Bitte wenden Sie sich an den Vorstand.</div>
+    <div class="pw-fehler" id="pw-fehler">Falsches Passwort. Bitte wenden Sie sich an den Vorstand.</div>
     <p class="pw-hint">Sie kennen das Passwort nicht?<br>Wenden Sie sich bitte an den Vorstand des LV Südwest.</p>
   </div>
 </div>
 
-<!-- ══ HAUPTBEREICH ══ -->
-<div id="app" style="display:none;">
-  <div class="top-bar">
+<!-- HAUPTBEREICH -->
+<div id="app">
+  <div class="kopfzeile">
     <h1>DHH Landesverband Südwest</h1>
-    <p>Veranstaltungsanmeldung · Deutsche Huntington-Hilfe e.V.</p>
+    <p>Veranstaltungsanmeldung &middot; Deutsche Huntington-Hilfe e.V.</p>
   </div>
 
   <div class="nav">
-    <button class="nav-btn active" onclick="showPage('events')">Veranstaltungen</button>
-    <button class="nav-btn" onclick="showPage('anmeldung')">Anmeldung</button>
-    <button class="nav-btn" onclick="showPage('info')">Kontakt & Info</button>
+    <button class="nav-btn aktiv" onclick="zeigeSeite('events')">Veranstaltungen</button>
+    <button class="nav-btn" onclick="zeigeSeite('anmeldung')">Anmeldung</button>
+    <button class="nav-btn" onclick="zeigeSeite('info')">Kontakt &amp; Info</button>
   </div>
 
   <!-- VERANSTALTUNGEN -->
-  <div id="events" class="page visible">
-    <p class="page-intro">Wählen Sie eine Veranstaltung aus, indem Sie auf die entsprechende Karte klicken. Sie werden dann direkt zum Anmeldeformular weitergeleitet.</p>
-
-    <div class="event-card" onclick="pickEvent(this,'Sommerfest 2026','Sa., 18. Juli 2026 · Stadtpark Karlsruhe')">
+  <div id="events" class="seite sichtbar">
+    <p class="intro-text">Wählen Sie eine Veranstaltung aus, indem Sie auf die Karte klicken. Sie werden dann direkt zum Anmeldeformular weitergeleitet.</p>
+    <div class="event-karte" onclick="waehleEvent(this,'Sommerfest 2026','Sa., 18. Juli 2026 · Stadtpark Karlsruhe')">
       <div class="event-icon">&#127796;</div>
-      <div class="event-body">
-        <div class="event-title">Sommerfest 2026</div>
-        <div class="event-meta">
-          &#128197; Datum wird noch bekannt gegeben<br>
-          &#128205; Ort wird noch bekannt gegeben
-        </div>
-        <span class="badge badge-open">Anmeldung offen</span>
+      <div class="event-inhalt">
+        <div class="event-titel">Sommerfest 2026</div>
+        <div class="event-info">Datum: wird noch bekannt gegeben<br>Ort: wird noch bekannt gegeben</div>
+        <span class="status">Anmeldung offen</span>
       </div>
     </div>
   </div>
 
   <!-- ANMELDUNG -->
-  <div id="anmeldung" class="page">
-
-    <div id="no-event-msg" class="no-event-hint">
+  <div id="anmeldung" class="seite">
+    <div id="kein-event-hinweis" class="kein-event">
       <strong>Noch keine Veranstaltung ausgewählt</strong>
       Bitte zuerst auf der Übersichtsseite eine Veranstaltung auswählen.
-      <br>
-      <button class="link-btn" onclick="showPage('events')">Zu den Veranstaltungen →</button>
+      <br><button class="link-btn" onclick="zeigeSeite('events')">Zu den Veranstaltungen &#8594;</button>
     </div>
-
-    <div id="form-wrap" style="display:none;">
-      <button class="back-btn" onclick="showPage('events')">← Zurück zur Übersicht</button>
-
-      <div class="form-card">
-        <div class="form-header">
-          <h2 id="form-event-title">–</h2>
-          <p id="form-event-meta">–</p>
+    <div id="formular-bereich" style="display:none;">
+      <button class="zurueck-btn" onclick="zeigeSeite('events')">&#8592; Zurück zur Übersicht</button>
+      <div class="form-karte">
+        <div class="form-kopf">
+          <h2 id="form-titel">–</h2>
+          <p id="form-info">–</p>
         </div>
         <div class="form-body">
+          <form id="anmelde-formular" onsubmit="sendeFormular(event)">
+            <!-- ⚠️ Access Key von web3forms.com eintragen: -->
+            <input type="hidden" name="access_key" value="IHREN_ACCESS_KEY_HIER_EINTRAGEN">
+            <input type="hidden" name="subject" id="feld-betreff" value="Neue Anmeldung">
+            <input type="hidden" name="Veranstaltung" id="feld-event">
+            <input type="text" name="_gotcha" style="display:none">
 
-          <!-- WEB3FORMS-FORMULAR (kostenlos, kein Server nötig) -->
-          <!-- ⚠️ HINWEIS: Ersetzen Sie "IHREN_ACCESS_KEY" durch Ihren persönlichen Key -->
-          <!-- Access Key kostenlos erhalten: https://web3forms.com → E-Mail eingeben → Key per E-Mail -->
-          <form id="anmelde-form"
-                action="https://api.web3forms.com/submit"
-                method="POST">
-
-            <!-- Web3Forms: Pflichtfeld Access Key -->
-            <input type="hidden" name="access_key" value="354c2f87-15f8-4af1-b81d-fa073034ec30">
-            <input type="hidden" name="subject" id="hidden-subject" value="Neue Anmeldung – DHH LV Südwest">
-            <input type="hidden" name="Veranstaltung" id="hidden-event">
-
-            <div class="field">
-              <label for="f-name">Ihr Name <span class="req">*</span></label>
+            <div class="feld">
+              <label for="f-name">Ihr Name <span class="pflicht">*</span></label>
               <input type="text" id="f-name" name="Name" placeholder="Vor- und Nachname" required>
             </div>
-
-            <div class="field">
-              <label for="f-email">E-Mail-Adresse <span class="req">*</span></label>
+            <div class="feld">
+              <label for="f-email">E-Mail-Adresse <span class="pflicht">*</span></label>
               <input type="email" id="f-email" name="E-Mail" placeholder="ihre@email.de" required>
-              <div class="hint">Sie erhalten eine Anmeldebestätigung an diese Adresse.</div>
+              <div class="hinweis">Sie erhalten eine Bestätigung an diese Adresse.</div>
             </div>
-
-            <div class="field">
+            <div class="feld">
               <label for="f-begleitung">Weitere teilnehmende Personen</label>
               <input type="text" id="f-begleitung" name="Weitere Teilnehmende"
                      placeholder="z.B. Erika Mustermann, Hans Mustermann">
-              <div class="hint">Bitte alle weiteren Teilnehmenden namentlich nennen.</div>
+              <div class="hinweis">Bitte alle weiteren Teilnehmenden namentlich nennen.</div>
             </div>
-
-            <div class="field">
+            <div class="feld">
               <label>Besondere Bedürfnisse</label>
-              <div class="check-group">
-                <label class="check-label">
+              <div class="checkbox-gruppe">
+                <label class="checkbox-zeile">
                   <input type="checkbox" name="Barrierefreiheit" value="Ja">
                   Barrierefreiheit erforderlich (Rollstuhl, Gehhilfe etc.)
                 </label>
-                <label class="check-label">
-                  <input type="checkbox" name="Vegetarisch/Vegan" value="Ja">
+                <label class="checkbox-zeile">
+                  <input type="checkbox" name="Vegetarisch" value="Ja">
                   Vegetarische oder vegane Verpflegung
                 </label>
-                <label class="check-label">
-                  <input type="checkbox" name="Lebensmittelallergie" value="Ja">
-                  Lebensmittelallergie (bitte unten näher beschreiben)
+                <label class="checkbox-zeile">
+                  <input type="checkbox" name="Allergie" value="Ja">
+                  Lebensmittelallergie (bitte unten beschreiben)
                 </label>
               </div>
             </div>
-
-            <div class="field">
+            <div class="feld">
               <label for="f-hinweis">Sonstige Hinweise oder Fragen</label>
               <textarea id="f-hinweis" name="Sonstiges"
-                        placeholder="z.B. Art der Allergie, Anreisewunsch, Fragen zur Veranstaltung …"></textarea>
+                        placeholder="z.B. Art der Allergie, Anreisewunsch, Fragen ..."></textarea>
             </div>
-
-            <!-- Honeypot-Spamschutz (unsichtbar für Menschen) -->
-            <input type="text" name="_gotcha" style="display:none">
-
-            <button type="submit" class="submit-btn" id="submit-btn">
+            <button type="submit" class="absenden-btn" id="absenden-btn">
               Jetzt verbindlich anmelden
             </button>
           </form>
-
-          <div class="success-box" id="success-box">
-            ✅ Vielen Dank! Ihre Anmeldung ist eingegangen.<br>
+          <div class="erfolg-box" id="erfolg-box">
+            Vielen Dank! Ihre Anmeldung ist eingegangen.<br>
             Eine Bestätigung wird in Kürze an Ihre E-Mail-Adresse gesendet.
           </div>
-          <div class="error-box" id="error-box">
-            ❌ Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut oder wenden Sie sich direkt an den Vorstand.
+          <div class="fehler-box" id="fehler-box">
+            Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut oder wenden Sie sich direkt an den Vorstand.
           </div>
-
         </div>
       </div>
     </div>
   </div>
 
   <!-- KONTAKT & INFO -->
-  <div id="info" class="page">
-
-    <div class="info-card">
+  <div id="info" class="seite">
+    <div class="info-karte">
       <h3>Kontakt LV Südwest</h3>
-      <p>Bei Fragen zu Veranstaltungen wenden Sie sich bitte an den Vorstand des Landesverbands Südwest.</p>
-      <p>
-        E-Mail: <a href="/cdn-cgi/l/email-protection#b6c0d9c4c5c2d7d8d2f6d2dede9bc5c3d3d2c1d3c5c298d2d3"><span class="__cf_email__" data-cfemail="5f29302d2c2b3e313b1f3b3737722c2a3a3b283a2c2b713b3a">[email&#160;protected]</span></a><br>
-        Telefon: <em>wird noch ergänzt</em>
-      </p>
+      <p>Bei Fragen wenden Sie sich bitte an den Vorstand des Landesverbands Südwest.</p>
+      <p>E-Mail: j.schaefer@dhh-ev.de<br>Telefon: wird noch ergänzt</p>
     </div>
-
-    <div class="info-card">
+    <div class="info-karte">
       <h3>Deutsche Huntington-Hilfe e.V.</h3>
-      <p>Informationen zur Huntington-Erkrankung, Beratungsangebote und weitere Ressourcen:</p>
-      <p><a href="https://www.dhh-ev.de" target="_blank">www.dhh-ev.de</a></p>
-      <hr class="divider">
-      <p>
-        Geschäftsstelle: Falkstraße 73–77, 47058 Duisburg<br>
-        Tel.: 0203 22 915 &nbsp;|&nbsp;
-        <a href="/cdn-cgi/l/email-protection#ff9b9797bf9b9797d29a89d19b9a"><span class="__cf_email__" data-cfemail="c9ada1a189ada1a1e4acbfe7adac">[email&#160;protected]</span></a>
-      </p>
+      <p>Bundesverband und weitere Informationen: www.dhh-ev.de</p>
+      <hr class="trennlinie">
+      <p>Falkstrasse 73-77, 47058 Duisburg &middot; Tel. 0203 22 915</p>
     </div>
-
-    <div class="info-card">
+    <div class="info-karte">
       <h3>Datenschutz</h3>
-      <p>
-        Ihre Anmeldedaten (Name, E-Mail-Adresse, besondere Bedürfnisse) werden ausschließlich zur
-        Organisation der jeweiligen Veranstaltung verwendet und nicht an Dritte weitergegeben.
-        Die Daten werden nach der Veranstaltung gelöscht.
-      </p>
-      <p style="margin-top:6px;">
-        Rechtsgrundlage ist Ihre freiwillige Einwilligung gemäß Art. 6 Abs. 1 lit. a DSGVO.
-        Sie können Ihre Anmeldung jederzeit per E-Mail an den Vorstand widerrufen.
-      </p>
-      <hr class="divider">
-      <p><strong style="color:var(--text);">Verantwortlich:</strong><br>
-        Vorstand des DHH Landesverbands Südwest<br>
-        <em>j.schaefer@dhh-ev.de</em>
-      </p>
+      <p>Ihre Anmeldedaten werden ausschliesslich zur Organisation der jeweiligen Veranstaltung
+         verwendet und nicht an Dritte weitergegeben. Die Daten werden nach der Veranstaltung gelöscht.</p>
+      <p style="margin-top:6px;">Rechtsgrundlage: Art. 6 Abs. 1 lit. a DSGVO.</p>
+      <hr class="trennlinie">
+      <p><strong>Verantwortlich:</strong> Vorstand DHH LV Südwest &middot; Adresse wird noch ergänzt</p>
     </div>
-
   </div>
-</div><!-- #app -->
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-// ── NAVIGATION ────────────────────────────────────────────────────────────
-function showPage(id) {
-  document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('visible'); });
-  document.getElementById(id).classList.add('visible');
-  document.querySelectorAll('.nav-btn').forEach(function(b, i){
-    b.classList.toggle('active', ['events','anmeldung','info'][i] === id);
-  });
-  window.scrollTo(0, 0);
-}
-
-// ── EVENT AUSWÄHLEN ───────────────────────────────────────────────────────
-function pickEvent(card, title, meta) {
-  document.querySelectorAll('.event-card').forEach(function(c){ c.classList.remove('selected'); });
-  card.classList.add('selected');
-  document.getElementById('form-event-title').textContent = title;
-  document.getElementById('form-event-meta').textContent = meta;
-  document.getElementById('hidden-event').value = title;
-  document.getElementById('hidden-subject').value = 'Neue Anmeldung: ' + title;
-  document.getElementById('form-wrap').style.display = 'block';
-  document.getElementById('anmelde-form').reset();
-  document.getElementById('success-box').style.display = 'none';
-  document.getElementById('error-box').style.display = 'none';
-  document.getElementById('submit-btn').disabled = false;
-  document.getElementById('submit-btn').innerHTML = 'Jetzt verbindlich anmelden';
-  showPage('anmeldung');
-}
-
-// ── FORMULAR ABSENDEN (AJAX via Formspree) ────────────────────────────────
-document.addEventListener('DOMContentLoaded', function() {
-  var form = document.getElementById('anmelde-form');
-  form.addEventListener('submit', function(e) {
-    e.preventDefault();
-    var btn = document.getElementById('submit-btn');
-    btn.disabled = true;
-    btn.innerHTML = '<span class="spinner"></span>Wird gesendet …';
-    document.getElementById('success-box').style.display = 'none';
-    document.getElementById('error-box').style.display   = 'none';
-
-    fetch(form.action, {
-      method: 'POST',
-      body: new FormData(form),
-      headers: { 'Accept': 'application/json' }
-    })
-    .then(function(res) {
-      if (res.ok) {
-        document.getElementById('success-box').sty
+</div>
+</body>
+</html>
